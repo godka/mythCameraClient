@@ -69,7 +69,7 @@ bool mythFFmpegEncoder::Init(){
 	av_dict_set(&opts, "b", "2.5M", 0);
 	c->width = mwidth;
 	c->height = mheight;
-	c->bit_rate = 400000;
+	c->bit_rate = 100000;
 	c->gop_size = 25;
 	AVRational ration = { 1, 25 };
 	c->time_base = ration;
@@ -139,7 +139,7 @@ void mythFFmpegEncoder::ProcessFrame(unsigned char** src, int* srclinesize, resp
 		response(this->hwnd, (char*) avpkt.data, avpkt.size);
 	}
 	else{
-		printf("decode failed\n");
+		printf("encode failed\n");
 	}
 	//}
 }

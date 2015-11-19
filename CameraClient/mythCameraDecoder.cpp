@@ -38,19 +38,33 @@ int mythCameraDecoder::decodethread()
 		cout << "set up camera failed!" << endl;
 	}
 	SDL_UnlockMutex(startmutex);
-	encoder = mythFFmpegEncoder::CreateNew(this, 640, 480);
-	char* yy = new char[640 * 480];
-	char* uu = new char[640 * 480 / 4];
-	char* vv = new char[640 * 480 / 4];
-	char* tmpsrc [] = { yy, uu, vv };
-	char* tmpsrc2[] = { yy, vv, uu };
-	int width, height;
+	//encoder = mythFFmpegEncoder::CreateNew(this, 640, 480);
+	char* yy = NULL;// new char[640 * 480];
+	char* uu = NULL; //new char[640 * 480 / 4];
+	char* vv = NULL; //new char[640 * 480 / 4];
+	char* tmpsrc [] = {NULL}; //{ yy, uu, vv };
+	char* tmpsrc2 [] = { NULL }; //{ yy, vv, uu };
+	int width = 0, height = 0;
 	char* tmp;
 	while (flag == 0){
 		int time0 = SDL_GetTicks();
 		int ret = camera->Capture(&width, &height, (void**)&tmp);
 		//int time4 = SDL_GetTicks();
 		if (ret == 0){
+			if (!encoder){
+				encoder = mythFFmpegEncoder::CreateNew(this, width, height);
+
+				yy = new char[width * height];
+				uu = new char[width * height / 4];
+				vv = new char[width * height / 4];
+				tmpsrc[0] = yy;
+				tmpsrc[1] = uu;
+				tmpsrc[2] = vv;
+
+				tmpsrc2[0] = yy;
+				tmpsrc2[1] = vv;
+				tmpsrc2[2] = uu;
+			}
 			int tmplinesize[] = { width, width / 2, width / 2 };
 			//int time3 = SDL_GetTicks();
 			mythFFmpegEncoder::RGB2yuv(width, height, tmp, (void**) tmpsrc);

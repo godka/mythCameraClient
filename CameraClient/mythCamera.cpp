@@ -2,7 +2,7 @@
 #include "MythConfig.hh"
 mythCamera::mythCamera()
 {
-	pCapture = cvCreateCameraCapture(CV_CAP_DSHOW);
+	pCapture = cvCreateCameraCapture(MYTHCAMERAPOS);
 	pFrame = NULL;
 	cout << "start OK!" << endl;
 }

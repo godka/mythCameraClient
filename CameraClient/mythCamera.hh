@@ -4,6 +4,12 @@
 #include "opencv/cxcore.h"
 #include "opencv/highgui.h"
 #include <iostream>
+
+#ifdef ANDROID
+#define MYTHCAMERAPOS CV_CAP_ANDROID_BACK
+#else
+#define MYTHCAMERAPOS CV_CAP_ANY
+#endif
 using namespace std;
 class mythCamera
 {
