@@ -14,6 +14,13 @@ using namespace std;
 class mythCamera
 {
 public:
+	static mythCamera* mmythCamera;
+	static mythCamera* GetInstance(){
+		if (!mmythCamera)
+			return CreateNew();
+		else
+			return mmythCamera;
+	}
 	static mythCamera* CreateNew(){
 		return new mythCamera();
 	}

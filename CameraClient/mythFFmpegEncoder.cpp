@@ -26,7 +26,14 @@ void mythFFmpegEncoder::RGB2yuv(int width, int height, const void* src, void** d
 		width, height, PIX_FMT_YUV420P,
 		SWS_FAST_BILINEAR, NULL, NULL, NULL);
 	uint8_t *rgb_src[3] = { (uint8_t *) src, NULL, NULL };
-	int srcwidth [] = { width * 3, 0, 0 };
+
+	int srcwidth [] = { width *
+#ifdef __MACOSX__
+		4
+#else
+		3
+#endif
+		, 0, 0 };
 	int dstwidth [] = { width, width / 2, width / 2 };
 	if (img_convert_ctx){
 		sws_scale(img_convert_ctx, (const uint8_t *const*) rgb_src, srcwidth, 0, height,
@@ -89,7 +96,7 @@ bool mythFFmpegEncoder::Init(){
 	}
 
 	/* allocate and init a re-usable frame */
-	frame = avcodec_alloc_frame();
+	frame = av_frame_alloc();
 	if (!frame) {
 		Cleanup();
 		return false;

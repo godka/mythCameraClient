@@ -7,8 +7,8 @@ mythCameraDecoder::mythCameraDecoder()
 {
 	flag = 0;
 	startthread = NULL;
-	encoder = NULL;
-	camera = NULL;
+	encoder = NULL; 
+	camera = mythCamera::GetInstance();
 	startmutex = SDL_CreateMutex();
 }
 
@@ -32,7 +32,7 @@ int mythCameraDecoder::decodethread()
 	encoder = NULL;
 	SDL_LockMutex(startmutex);
 	if (camera == NULL){
-		camera = mythCamera::CreateNew();
+		camera = mythCamera::GetInstance();
 	}
 	if (!camera){
 		cout << "set up camera failed!" << endl;
@@ -42,16 +42,15 @@ int mythCameraDecoder::decodethread()
 	char* yy = NULL;// new char[640 * 480];
 	char* uu = NULL; //new char[640 * 480 / 4];
 	char* vv = NULL; //new char[640 * 480 / 4];
-	char* tmpsrc [] = {NULL}; //{ yy, uu, vv };
-	char* tmpsrc2 [] = { NULL }; //{ yy, vv, uu };
+	char* tmpsrc [] = {0,0,0}; //{ yy, uu, vv };
+	char* tmpsrc2 [] = { 0, 0, 0 }; //{ yy, vv, uu };
 	int width = 0, height = 0;
 	char* tmp;
 	while (flag == 0){
 		int time0 = SDL_GetTicks();
 		int ret = camera->Capture(&width, &height, (void**)&tmp);
-		//int time4 = SDL_GetTicks();
 		if (ret == 0){
-			if (!encoder){
+			if (encoder == NULL){
 				encoder = mythFFmpegEncoder::CreateNew(this, width, height);
 
 				yy = new char[width * height];

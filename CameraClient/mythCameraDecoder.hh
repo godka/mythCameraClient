@@ -7,10 +7,6 @@ class mythCameraDecoder :
 	public mythVirtualDecoder
 {
 public:
-	static mythCameraDecoder* mmythcameradecoder;
-	static mythCameraDecoder* GetInstance(){
-		return mmythcameradecoder;
-	}
 	static void staticresponse(void *myth, char* pdata, int plength);
 	static mythCameraDecoder* CreateNew(){
 		return new mythCameraDecoder();

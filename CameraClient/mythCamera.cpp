@@ -1,10 +1,15 @@
 #include "mythCamera.hh"
 #include "MythConfig.hh"
+mythCamera* mythCamera::mmythCamera = NULL;
 mythCamera::mythCamera()
 {
 	pCapture = cvCreateCameraCapture(MYTHCAMERAPOS);
 	pFrame = NULL;
-	cout << "start OK!" << endl;
+	if (pCapture)
+		cout << "start OK!" << endl;
+	else
+		cout << "start failed!" << endl;
+	this->mmythCamera = this;
 }
 void mythCamera::CloseCamera(){
 	cvReleaseImage(&pFrame);
