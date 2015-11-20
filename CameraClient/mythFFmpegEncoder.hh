@@ -35,8 +35,7 @@ extern "C"{
 class mythFFmpegEncoder
 {
 public:
-
-	static void mythFFmpegEncoder::RGB2yuv(int width, int height, const void* src, void** dst);
+	static void RGB2yuv(int width, int height, int stride, const void* src, void** dst);
 	typedef void (responseHandler)(void *myth, char* pdata, int plength);
 	mythFFmpegEncoder(void* phwnd, int width, int height);
 	~mythFFmpegEncoder(void);

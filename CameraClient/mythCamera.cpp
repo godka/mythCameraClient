@@ -14,13 +14,14 @@ mythCamera::mythCamera()
 void mythCamera::CloseCamera(){
 	cvReleaseImage(&pFrame);
 }
-int mythCamera::Capture(int* width, int *height,void** imageSource){
+int mythCamera::Capture(int* width, int *height, int* stride,void** imageSource){
 	//int t = SDL_GetTicks();
 	pFrame = cvQueryFrame(pCapture);
 	//printf("capture time: %dms\n", SDL_GetTicks() - t);
 	if (pFrame){
 		if(width)*width = pFrame->width;
 		if(height)*height = pFrame->height;
+		if (stride)*stride = pFrame->widthStep;
 		if (imageSource)*imageSource = pFrame->imageData;
 		return 0;
 	}

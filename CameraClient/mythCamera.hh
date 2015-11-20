@@ -26,7 +26,7 @@ public:
 	}
 	~mythCamera();
 	void CloseCamera();
-	int Capture(int *width, int *height,void** src);
+	int Capture(int* width, int *height, int* stride, void** imageSource);
 protected:
 	mythCamera();
 private:

@@ -1,7 +1,6 @@
-#! /bin/bash
-rm -rf lib*
-rm -rf sdl2
+#! /bin/sh
 rm *.lib
-rm *.vcxproj
-rm *.fliters
-echo "build ok!"
+rm -rf sdl2
+rm -rf lib*
+rm *.vcx*
+rm -rf opencv*

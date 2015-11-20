@@ -20,20 +20,14 @@ void mythFFmpegEncoder::yuv2RGB(int width, int height,
 	return;
 }
 
-void mythFFmpegEncoder::RGB2yuv(int width, int height, const void* src, void** dst){
+void mythFFmpegEncoder::RGB2yuv(int width, int height, int stride,const void* src, void** dst){
 	struct SwsContext *img_convert_ctx = sws_getContext(
 		width, height, PIX_FMT_RGB24,
 		width, height, PIX_FMT_YUV420P,
 		SWS_FAST_BILINEAR, NULL, NULL, NULL);
 	uint8_t *rgb_src[3] = { (uint8_t *) src, NULL, NULL };
 
-	int srcwidth [] = { width *
-#ifdef __MACOSX__
-		4
-#else
-		3
-#endif
-		, 0, 0 };
+	int srcwidth [] = { stride, 0, 0 };
 	int dstwidth [] = { width, width / 2, width / 2 };
 	if (img_convert_ctx){
 		sws_scale(img_convert_ctx, (const uint8_t *const*) rgb_src, srcwidth, 0, height,
