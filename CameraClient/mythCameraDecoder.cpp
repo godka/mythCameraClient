@@ -20,6 +20,9 @@ mythCameraDecoder::~mythCameraDecoder()
 		delete encoder;
 		encoder = NULL;
 	}
+	if (startmutex){
+		SDL_DestroyMutex(startmutex);
+	}
 }
 
 void mythCameraDecoder::start()
